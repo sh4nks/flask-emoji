@@ -1,40 +1,43 @@
 from flask import Flask, render_template
-from flask_emoji import Emoji
+from flask_emoji import Emoji, render_mistune, render_bbcode
 
 # Default Settings
 SECRET_KEY = "this-key-is-not-secure"
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.jinja_env.filters["render_mistune"] = render_mistune
+app.jinja_env.filters["render_bbcode"] = render_bbcode
+
 emoji = Emoji(app)
 
-test_single = ":smile:"
-test_multiple = ":smile: :smiley:"
-test_other = "![test](test.png) ![test2](test2.png)"
+bbcode_text = """
+[b]BBCode Example[/b]
 
-print "Single Emoji:"
-print emoji.render_mistune(test_single)
+Powered by [url=https://github.com/dcwatson/bbcode]bbcode[/url].
 
-print "Multiple in one line:"
-print emoji.render_mistune(test_multiple)
+Its raining :cat:s and :dog:s.
+"""
 
-print "Other:"
-print emoji.render_mistune(test_other)
+markdown_text = """
+**Markdown Example**
+
+Powered by [mistune](https://github.com/lepture/mistune).
+
+Its raining :cat:s and :dog:s.
+"""
+
+standalone_text = """
+Standalone example <br />
+
+Its raining :cat:s and :dog:s.
+"""
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
-
-@app.route("/bbcode")
-def bbcode():
-    return render_template("bbcode.html")
-
-
-@app.route("/markdown")
-def markdown():
-    return render_template("markdown.html")
+    return render_template("index.html", bbcode=bbcode_text,
+                           markdown=markdown_text, standalone=standalone_text)
 
 
 if __name__ == "__main__":

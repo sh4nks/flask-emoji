@@ -2,6 +2,13 @@
 
 {% block content %}
 
-    Hey!
+    <h2>Standalone</h2>
+    {{ standalone | render_emoji | safe }}
+
+    <h2>Markdown</h2>
+    {{ markdown | render_mistune | safe }}
+
+    <h2>BBCode</h2>
+    {{ bbcode | render_bbcode | safe }}
 
 {% endblock %}
