@@ -1,45 +1,40 @@
-import copy
+# -*- coding: utf-8 -*-
+"""
+    flask_emoji.ext.mistune.renderer
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The Mistune renderer.
+
+    :copyright: (c) 2015 by sh4nks
+    :license: BSD, see LICENSE for more details.
+"""
+
 import re
-from mistune import Renderer, InlineGrammar, InlineLexer
+from mistune import Renderer
 
 
 class EmojiRenderer(Renderer):
-    def emoji(self, emoji_class, emoji_alt, emoji_src):
-        return '<img class="{}" alt="{}" src="{}" />'.format(
-            emoji_class, emoji_src, emoji_alt
-        )
-
-
-class EmojiInlineGrammar(InlineGrammar):
-    # it would take a while for creating the right regex
-    emoji = re.compile(r':([a-z0-9\+\-_]+):', re.I)
-
-
-class EmojiInlineLexer(InlineLexer):
-    default_rules = copy.copy(InlineLexer.default_rules)
-
-    # Add emoji parser to default rules
-    # you can insert it any place you like
-    default_rules.insert(3, 'emoji')
-
-    def __init__(self, renderer, rules=None, **kwargs):
-        if rules is None:
-            # use the inline grammar
-            rules = EmojiInlineGrammar()
-
+    def __init__(self, **kwargs):
         self.emojis = kwargs.pop("emojis")
         self.emoji_class = kwargs.pop("emoji_class")
         self.emoji_src = kwargs.pop("emoji_src")
 
-        super(EmojiInlineLexer, self).__init__(renderer, rules, **kwargs)
+        super(EmojiRenderer, self).__init__(**kwargs)
 
-    def output_emoji(self, m):
-        line = m.group(0)
-        text = m.group(1)
+    def paragraph(self, text):
+        """Rendering paragraph tags. Like ``<p>`` with emoji support."""
+        pattern = re.compile(r':([a-z0-9\+\-_]+):', re.I)
 
-        link = "{}/{}".format(self.emoji_src, self.emojis[text])
+        def emojify(match):
+            value = match.group(1)
 
-        if text in self.emojis:
-            return self.renderer.image(link, text, text)
+            if value in self.emojis:
+                filename = "{}/{}".format(self.emoji_src, self.emojis[value])
+                link = '<img class="{}" alt="{}" src="{}" />'.format(
+                    self.emoji_class, value, filename
+                )
+                return link
+            return match.group(0)
 
-        return self.renderer.text(line)
+        text = pattern.sub(emojify, text)
+        return '<p>%s</p>\n' % text.strip(' ')

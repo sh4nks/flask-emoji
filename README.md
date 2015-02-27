@@ -7,11 +7,18 @@ With Flask-Emoji it's super easy to add Emoji support to your site.
 It is also possible to add it to your prefered markup rendered such as
 markdown or bbcode.
 
+## TODO
+
+    On my TODO List:
+    - Tests
+    - Docs
+    - bbcode
+    - Dont overwrite mistune renderer
+
 
 # INSTALLATION
 
-TOD
-O
+TODO
 
 # DOCUMENTATION
 
