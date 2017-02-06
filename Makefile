@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: lint test coverage clean clean-pyc clean-build docs
 
 help:
 	    @echo "  clean       remove unwanted stuff"
@@ -7,23 +7,39 @@ help:
 	    @echo "  sdist       package"
 	    @echo "  test        run the tests"
 
-clean:
-	    find . -name '*.pyc' -exec rm -f {} +
-	    find . -name '*.pyo' -exec rm -f {} +
-	    find . -name '*~' -exec rm -f {} +
-	    find . -name '.DS_Store' -exec rm -f {} +
-	    find . -name '__pycache__' -exec rm -rf {} +
 
-release: register
-	    python setup.py sdist upload
+lint:
+	@which flake8 || pip install flake8
+	@flake8 flask_emoji tests
 
-register:
-	    python setup.py register
+clean: clean-build clean-pyc clean-docs
+	    @find . -name '.DS_Store' -exec rm -f {} +
 
-sdist:
-	    python setup.py sdist
+clean-build:
+	    @rm -fr build/
+	    @rm -fr dist/
+	    @rm -fr *.egg-info
+	    @rm -f mistune.c
+	    @rm -fr cover/
+
+clean-pyc:
+	    @find . -name '*.pyc' -exec rm -f {} +
+	    @find . -name '*.pyo' -exec rm -f {} +
+	    @find . -name '*~' -exec rm -f {} +
+	    @find . -name '__pycache__' -exec rm -fr {} +
+
+clean-docs:
+	    @rm -fr  docs/_build
+
+docs:
+	    @$(MAKE) -C docs html
+
+release:
+	    @twine upload dist/*.tar.gz
+	    @twine upload dist/*.whl
 
 develop:
 	    python setup.py develop
+
 test:
 	    nosetests --cover-package=flask_emoji --with-coverage

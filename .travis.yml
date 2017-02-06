@@ -1,9 +1,17 @@
+sudo: false
 language: python
 python:
-  - "2.7"
-  - "3.4"
+    - 2.7
+    - 3.4
+    - 3.5
+    - 3.6
 install:
-  - "pip install -r dev-requirements.txt"
-script: make test
+    - pip install -r requirements-dev.txt
+script:
+    - pytest
+cache:
+    - pip
+notifications:
+    email: false
 after_success:
-  - coveralls
+    - coveralls
