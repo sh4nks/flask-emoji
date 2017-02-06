@@ -1,12 +1,12 @@
-.PHONY: lint test coverage clean clean-pyc clean-build docs
+.PHONY: lint clean clean-pyc clean-build docs release develop test
 
 help:
 	    @echo "  clean       remove unwanted stuff"
 	    @echo "  release     package and upload a release"
+	    @echo "  lint        checks for pep8 errors"
 	    @echo "  develop     make a development package"
-	    @echo "  sdist       package"
+	    @echo "  release     release package on PyPI"
 	    @echo "  test        run the tests"
-
 
 lint:
 	@which flake8 || pip install flake8
@@ -19,7 +19,6 @@ clean-build:
 	    @rm -fr build/
 	    @rm -fr dist/
 	    @rm -fr *.egg-info
-	    @rm -f mistune.c
 	    @rm -fr cover/
 
 clean-pyc:
@@ -42,4 +41,4 @@ develop:
 	    python setup.py develop
 
 test:
-	    nosetests --cover-package=flask_emoji --with-coverage
+	    py.test

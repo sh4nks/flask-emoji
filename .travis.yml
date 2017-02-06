@@ -8,7 +8,7 @@ python:
 install:
     - pip install -r requirements-dev.txt
 script:
-    - pytest
+    - py.test
 cache:
     - pip
 notifications:

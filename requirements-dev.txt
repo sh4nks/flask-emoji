@@ -1,7 +1,10 @@
 Flask
+mistune
+emojipy
 pytest
 pytest-cov
-tox
 coverage
 coveralls
+tox
 sphinx
+-e .
