@@ -1,0 +1,7 @@
+Flask
+pytest
+pytest-cov
+tox
+coverage
+coveralls
+sphinx

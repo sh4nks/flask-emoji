@@ -19,24 +19,25 @@ Resources
 * `issues <https://github.com/sh4nks/flask-emoji/issues>`_
 
 """
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(
     name='Flask-Emoji',
-    version='0.1',
-    url='http://github.com/sh4nks/flask-emoji/',
+    version='1.0.0',
+    url='https://github.com/sh4nks/flask-emoji/',
     license='BSD',
-    author='sh4nks',
-    author_email='sh4nks7@gmail.com',
-    description=
-        'A extension to add Emoji support to your site.',
+    author='Peter Justin',
+    author_email='peter.justin@outlook.com',
+    description='Adds EmojiOne integration to your Flask application.',
     long_description=__doc__,
-    packages=['flask_emoji'],
+    packages=find_packages(exclude=('tests',)),
     include_package_data=True,
     zip_safe=False,
     platforms='any',
     install_requires=[
         'Flask>=0.6',
+        'mistune>=0.7.3',
+        'emojipy>=0.1'
     ],
     test_suite='nose.collector',
     tests_require=[
@@ -49,6 +50,12 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]

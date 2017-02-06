@@ -1,30 +1,39 @@
 [![Build Status](https://travis-ci.org/sh4nks/flask-emoji.svg?branch=master)](https://travis-ci.org/sh4nks/flask-emoji)
 [![Coverage Status](https://coveralls.io/repos/sh4nks/flask-emoji/badge.png)](https://coveralls.io/r/sh4nks/flask-emoji)
+[![PyPI Version](https://img.shields.io/pypi/v/flask-emoji.svg)](https://pypi.python.org/pypi/flask-emoji)
+[![License](https://img.shields.io/badge/license-BSD-yellow.svg)](https://github.com/sh4nks/flask-emoji)
 
-# FLASK-EMOJI
+# Flask-Emoji
 
-With Flask-Emoji it's super easy to add Emoji support to your site.
-It is also possible to add it to your prefered markup rendered such as
-markdown or bbcode.
+*Adds EmojiOne integration to Flask*
 
-## TODO
-
-    On my TODO List:
-    - Tests
-    - Docs
-    - bbcode
-    - Dont overwrite mistune renderer
+Flask-Emoji provides an easy way to add emoji support to your Flask
+application.
 
 
-# INSTALLATION
+# Quickstart
 
-TODO
+Install it from PyPI:
 
-# DOCUMENTATION
+    $ pip install Flask-Emoji
 
-TODO
+You can either bind Flask-Emoji directly to a specific application instance
+
+    app = Flask(__name__)
+    emoji = Emoji(app)
 
 
-# LICENSE
+or by using the factory pattern, you can bind it to one or more instances:
 
-[BSD LICENSE](http://flask.pocoo.org/docs/license/#flask-license)
+    emoji = Emoji()
+    def create_app():
+        app = Flask(__name__)
+        emoji.init_app(app)
+        return app
+
+
+# Links
+
+* [Documentation](https://flask-emoji.readthedocs.io)
+* [Source Code](https://github.com/sh4nks/flask-emoji)
+* [Issues](https://github.com/sh4nks/flask-emoji/issues)
